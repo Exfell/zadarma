@@ -127,8 +127,11 @@ temp = json.loads(z_api.call('/v1/pbx/record/request/', {'call_id': call_id}))
 
 #print(json.dumps(temp, indent=2))
 # ЗДЕСЬ НАДО УКАЗАТЬ ПУТЬ ДО ПАПКИ С ФАЙЛАМИ MP3
-file_path = f"C:/Users/roma1/PycharmProjects/interestingProjects/records/{call_id}.mp3"
+file_path = f"/var/www/scripts/records/{call_id}.mp3"
 if 'link' in temp:
     r = requests.get(temp['link'])
     # --- КОНВЕРТИРУЕМ mp3 в BASE64 ---
-    print({'data':r.content})
+    print({'name':f"{call_id}.mp3"})
+    # --- СОХРАНЯЕМ ФАЙЛ MP3 ---
+    with open(f"{file_path}", "wb") as f:
+        f.write(r.content)
